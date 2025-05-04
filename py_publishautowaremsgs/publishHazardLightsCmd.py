@@ -7,15 +7,17 @@ message format: uint8
 
 import rclpy
 from autoware_vehicle_msgs.msg import HazardLightsCommand
-
-from std_msgs.msg import UInt8
 from builtin_interfaces.msg import Time
+from std_msgs.msg import UInt8
 
-def main():
+
+def publishHazardLightsCmd():
     rclpy.init()
 
-    node = rclpy.create_node('dummy_autoware_node')
-    publisher = node.create_publisher(HazardLightsCommand, '/control/command/hazard_lights_cmd', 100)
+    node = rclpy.create_node("dummy_autoware_node")
+    publisher = node.create_publisher(
+        HazardLightsCommand, "/control/command/hazard_lights_cmd", 100
+    )
     msg = HazardLightsCommand()
 
     while True:
@@ -24,7 +26,9 @@ def main():
             msg.command = value
 
             timestamp = Time()
-            timestamp.sec, timestamp.nanosec = rclpy.clock.Clock().now().seconds_nanoseconds()
+            timestamp.sec, timestamp.nanosec = (
+                rclpy.clock.Clock().now().seconds_nanoseconds()
+            )
             msg.stamp = timestamp
 
             publisher.publish(msg)
@@ -32,9 +36,3 @@ def main():
         except:
             print("Closing publisher.")
             break
-
-
-if __name__ == "__main__":
-    main()
-
-
