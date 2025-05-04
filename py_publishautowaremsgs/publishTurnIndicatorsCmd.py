@@ -2,26 +2,31 @@
 message format: command (uint8)
 0 = no command
 1 = disable
-2 = enable
+2 = enable left
+3 = enable right
 """
 
 import rclpy
-from autoware_vehicle_msgs.msg import HazardLightsCommand
+from autoware_vehicle_msgs.msg import TurnIndicatorsCommand
 from builtin_interfaces.msg import Time
 
 
-def publishHazardLightsCmd():
+def publishTurnIndicatorsCmd():
     rclpy.init()
 
     node = rclpy.create_node("dummy_autoware_node")
     publisher = node.create_publisher(
-        HazardLightsCommand, "/control/command/hazard_lights_cmd", 10
+        TurnIndicatorsCommand, "/control/command/turn_indicators_cmd", 10
     )
-    msg = HazardLightsCommand()
+    msg = TurnIndicatorsCommand()
 
     while True:
         try:
-            value = int(input("Value to publish (0 = no change, 1 = off, 2 = on): "))
+            value = int(
+                input(
+                    "Value to publish (0 = no change, 1 = off, 2 = left, 3 = right): "
+                )
+            )
             msg.command = value
 
             timestamp = Time()
