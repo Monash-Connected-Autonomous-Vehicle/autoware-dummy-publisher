@@ -1,5 +1,6 @@
-from .publishHazardLightsCmd import publishHazardLightsCmd
-from .publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
+from publishHazardLightsCmd import publishHazardLightsCmd
+from publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
+from publishGearCmd import publishGearCmd
 
 
 def main():
@@ -7,6 +8,7 @@ def main():
     opts = {
         "/control/command/hazard_lights_cmd": publishHazardLightsCmd,
         "/control/command/turn_indicators_cmd": publishTurnIndicatorsCmd,
+        "/control/command/gear_cmd": publishGearCmd,
     }
 
     while True:

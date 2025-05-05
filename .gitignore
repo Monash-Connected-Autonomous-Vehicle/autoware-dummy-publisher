@@ -1,0 +1,14 @@
+*.pyc
+*.iml
+*.swp
+.project
+.pydevproject
+.DS_Store
+.idea
+
+# colcon/CMake output
+build
+install
+log
+
+**/__pycache__
