@@ -33,8 +33,6 @@ from builtin_interfaces.msg import Time
 
 
 def publishGearCmd():
-    rclpy.init()
-
     node = rclpy.create_node("dummy_autoware_node")
     publisher = node.create_publisher(GearCommand, "/control/command/gear_cmd", 10)
     msg = GearCommand()

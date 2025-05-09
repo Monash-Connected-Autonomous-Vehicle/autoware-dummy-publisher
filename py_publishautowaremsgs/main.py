@@ -1,9 +1,11 @@
-from publishHazardLightsCmd import publishHazardLightsCmd
-from publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
-from publishGearCmd import publishGearCmd
+from .publishHazardLightsCmd import publishHazardLightsCmd
+from .publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
+from .publishGearCmd import publishGearCmd
+import rclpy
 
 
 def main():
+    rclpy.init()
 
     opts = {
         "/control/command/hazard_lights_cmd": publishHazardLightsCmd,

@@ -12,8 +12,6 @@ from builtin_interfaces.msg import Time
 
 
 def publishTurnIndicatorsCmd():
-    rclpy.init()
-
     node = rclpy.create_node("dummy_autoware_node")
     publisher = node.create_publisher(
         TurnIndicatorsCommand, "/control/command/turn_indicators_cmd", 10

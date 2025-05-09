@@ -11,8 +11,6 @@ from builtin_interfaces.msg import Time
 
 
 def publishHazardLightsCmd():
-    rclpy.init()
-
     node = rclpy.create_node("dummy_autoware_node")
     publisher = node.create_publisher(
         HazardLightsCommand, "/control/command/hazard_lights_cmd", 10
