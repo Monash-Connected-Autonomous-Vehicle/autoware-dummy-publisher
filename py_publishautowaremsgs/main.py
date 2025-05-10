@@ -2,13 +2,6 @@ from .publishHazardLightsCmd import publishHazardLightsCmd
 from .publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
 from .publishGearCmd import publishGearCmd
 import rclpy
-from sys import exit
-
-
-def shutdown(node):
-    node.destroy_node()
-    rclpy.shutdown()
-    exit(0)
 
 
 def main():
@@ -32,14 +25,21 @@ def main():
         while True:
             try:
                 choice = input(f"Topic to publish to (1-{len(opts)}, q to quit): ")
+
+                # exit publisher
                 if choice.lower() == "q":
-                    shutdown(node)
+                    node.destroy_node()
+                    rclpy.shutdown()
+                    return
+
+                # get and validate choice
                 choice = int(choice) - 1
                 if 0 <= choice < len(opts):
                     break
             except:
                 print("Invalid input.")
 
+        # run the publisher
         topic = list(opts.keys())[choice]
         opts[topic](node)
 
