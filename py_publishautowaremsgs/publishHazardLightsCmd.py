@@ -14,6 +14,7 @@ def publishHazardLightsCmd(node):
     publisher = node.create_publisher(
         HazardLightsCommand, "/control/command/hazard_lights_cmd", 5
     )
+    msg = HazardLightsCommand()
 
     while True:
         try:
@@ -22,9 +23,7 @@ def publishHazardLightsCmd(node):
                 print("Invalid command value")
                 continue
 
-            msg = HazardLightsCommand()
             msg.command = value
-
             msg.stamp = rclpy.clock.Clock().now().to_msg()
 
             publisher.publish(msg)

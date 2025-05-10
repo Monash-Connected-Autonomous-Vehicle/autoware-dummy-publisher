@@ -15,6 +15,7 @@ def publishTurnIndicatorsCmd(node):
     publisher = node.create_publisher(
         TurnIndicatorsCommand, "/control/command/turn_indicators_cmd", 5
     )
+    msg = TurnIndicatorsCommand()
 
     while True:
         try:
@@ -25,9 +26,7 @@ def publishTurnIndicatorsCmd(node):
                 print("Invalid command value")
                 continue
 
-            msg = TurnIndicatorsCommand()
             msg.command = value
-
             msg.stamp = rclpy.clock.Clock().now().to_msg()
 
             publisher.publish(msg)

@@ -34,6 +34,7 @@ from builtin_interfaces.msg import Time
 
 def publishGearCmd(node):
     publisher = node.create_publisher(GearCommand, "/control/command/gear_cmd", 5)
+    msg = GearCommand()
 
     while True:
         try:
@@ -53,9 +54,7 @@ def publishGearCmd(node):
                 print("Invalid command value")
                 continue
 
-            msg = GearCommand()
             msg.command = value
-
             msg.stamp = rclpy.clock.Clock().now().to_msg()
 
             publisher.publish(msg)
