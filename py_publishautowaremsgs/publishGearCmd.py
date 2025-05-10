@@ -32,16 +32,15 @@ from autoware_vehicle_msgs.msg import GearCommand
 from builtin_interfaces.msg import Time
 
 
-def publishGearCmd():
-    node = rclpy.create_node("dummy_autoware_node")
-    publisher = node.create_publisher(GearCommand, "/control/command/gear_cmd", 10)
+def publishGearCmd(node):
+    publisher = node.create_publisher(GearCommand, "/control/command/gear_cmd", 5)
     msg = GearCommand()
 
     while True:
         try:
             value = int(
                 input(
-                    """Value to publish:
+                    """Command value
             0     = none
             1     = neutral
             2-19  = drive 1-18
@@ -51,6 +50,10 @@ def publishGearCmd():
             : """
                 )
             )
+            if not (0 <= value <= 24):
+                print("Invalid command value")
+                continue
+
             msg.command = value
 
             timestamp = Time()
@@ -62,5 +65,6 @@ def publishGearCmd():
             publisher.publish(msg)
             print(f"Published: command = {msg.command}")
         except:
-            print("Closing publisher.")
+            node.destroy_publisher(publisher)
+            print("Cleaning up and closing publisher")
             break

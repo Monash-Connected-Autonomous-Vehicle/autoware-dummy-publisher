@@ -10,16 +10,19 @@ from autoware_vehicle_msgs.msg import HazardLightsCommand
 from builtin_interfaces.msg import Time
 
 
-def publishHazardLightsCmd():
-    node = rclpy.create_node("dummy_autoware_node")
+def publishHazardLightsCmd(node):
     publisher = node.create_publisher(
-        HazardLightsCommand, "/control/command/hazard_lights_cmd", 10
+        HazardLightsCommand, "/control/command/hazard_lights_cmd", 5
     )
     msg = HazardLightsCommand()
 
     while True:
         try:
-            value = int(input("Value to publish (0 = no change, 1 = off, 2 = on): "))
+            value = int(input("Command value (0 = no change, 1 = off, 2 = on): "))
+            if not (0 <= value <= 2):
+                print("Invalid command value")
+                continue
+
             msg.command = value
 
             timestamp = Time()
@@ -31,5 +34,6 @@ def publishHazardLightsCmd():
             publisher.publish(msg)
             print(f"Published: command = {msg.command}")
         except:
-            print("Closing publisher.")
+            node.destroy_publisher(publisher)
+            print("Cleaning up and closing publisher")
             break

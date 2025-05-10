@@ -11,20 +11,21 @@ from autoware_vehicle_msgs.msg import TurnIndicatorsCommand
 from builtin_interfaces.msg import Time
 
 
-def publishTurnIndicatorsCmd():
-    node = rclpy.create_node("dummy_autoware_node")
+def publishTurnIndicatorsCmd(node):
     publisher = node.create_publisher(
-        TurnIndicatorsCommand, "/control/command/turn_indicators_cmd", 10
+        TurnIndicatorsCommand, "/control/command/turn_indicators_cmd", 5
     )
     msg = TurnIndicatorsCommand()
 
     while True:
         try:
             value = int(
-                input(
-                    "Value to publish (0 = no change, 1 = off, 2 = left, 3 = right): "
-                )
+                input("Command value (0 = no change, 1 = off, 2 = left, 3 = right): ")
             )
+            if not (0 <= value <= 3):
+                print("Invalid command value")
+                continue
+
             msg.command = value
 
             timestamp = Time()
@@ -36,5 +37,6 @@ def publishTurnIndicatorsCmd():
             publisher.publish(msg)
             print(f"Published: command = {msg.command}")
         except:
-            print("Closing publisher.")
+            node.destroy_publisher(publisher)
+            print("Cleaning up and closing publisher")
             break

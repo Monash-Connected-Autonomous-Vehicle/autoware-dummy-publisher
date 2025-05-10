@@ -7,6 +7,9 @@ import rclpy
 def main():
     rclpy.init()
 
+    node = rclpy.create_node("dummy_autoware_node")
+
+    # create messages and publishers
     opts = {
         "/control/command/hazard_lights_cmd": publishHazardLightsCmd,
         "/control/command/turn_indicators_cmd": publishTurnIndicatorsCmd,
@@ -32,7 +35,7 @@ def main():
                 continue
 
         topic = list(opts.keys())[choice]
-        opts[topic]()
+        opts[topic](node)
 
 
 if __name__ == "__main__":
