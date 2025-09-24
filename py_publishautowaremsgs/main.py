@@ -2,6 +2,7 @@ from .publishHazardLightsCmd import publishHazardLightsCmd
 from .publishTurnIndicatorsCmd import publishTurnIndicatorsCmd
 from .publishGearCmd import publishGearCmd
 import rclpy
+from .publishAckermannCmd import publishAckermannCmd
 
 
 def main():
@@ -14,6 +15,7 @@ def main():
         "/control/command/hazard_lights_cmd": publishHazardLightsCmd,
         "/control/command/turn_indicators_cmd": publishTurnIndicatorsCmd,
         "/control/command/gear_cmd": publishGearCmd,
+        "/control/command/control_cmd": publishAckermannCmd,
     }
 
     while True:
